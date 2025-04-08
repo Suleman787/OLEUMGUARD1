@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OleumGuard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      const mainContent = document.getElementById('main-content');
+
+      document.getElementById('signup-link').addEventListener('click', () => {
+        loginForm.classList.add('hidden');
+        signupForm.classList.remove('hidden');
+      });
+
+      document.getElementById('login-link').addEventListener('click', () => {
+        signupForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+      });
+
+      document.querySelectorAll('.form-login').forEach(form => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const username = form.querySelector('input[name="username"]').value;
+          const password = form.querySelector('input[name="password"]').value;
+          const passwordRegex = /^(?=.*[A-Z])(?=.*\d).+$/;
+          if (username === "Group 8" && password === "Legend1" && passwordRegex.test(password)) {
+            loginForm.classList.add('hidden');
+            signupForm.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            document.querySelector('.tab-link[href="#psi-system"]').classList.add('bg-blue-700', 'text-white');
+          } else {
+            alert("Invalid credentials. Ensure Username: Group 8 and Password: Legend1 (must include one uppercase and one number). Only exact match is accepted.");
+          }
+        });
+      });
+
+      document.querySelectorAll('.tab-link').forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('bg-blue-700', 'text-white'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+          tab.classList.add('bg-blue-700', 'text-white');
+          document.querySelector(tab.getAttribute('href')).classList.remove('hidden');
+        });
+      });
+
+      document.getElementById('emergency-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const complaintText = document.getElementById('complaint-text').value;
+        if (complaintText.trim() === "") {
+          alert("Please enter a complaint!");
+        } else {
+          alert("Your complaint has been submitted. All users will be alerted.");
+          document.getElementById('complaint-text').value = "";
+        }
+      });
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #333;
+    }
+    .tab-content {
+      font-size: 20px;
+    }
+    .list-inside {
+      list-style-type: none;
+    }
+    .list-inside li {
+      position: relative;
+      padding-left: 30px;
+    }
+    .list-inside li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 30px;
+      color: #4A90E2;
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Login Form -->
+  <div id="login-form" class="min-h-screen flex items-center justify-center">
+    <form class="bg-white p-8 rounded shadow-md w-full max-w-md form-login">
+      <img src="images/a.jpg" alt="OleumGuard Logo" class="mx-auto mb-4">
+      <h2 class="text-[60px] font-bold mb-4 text-center">Login</h2>
+      <label class="block mb-2">Username</label>
+      <input type="text" name="username" class="w-full mb-4 px-3 py-2 border rounded" required>
+      <label class="block mb-2">Password</label>
+      <input type="password" name="password" class="w-full mb-4 px-3 py-2 border rounded" required>
+      <p class="text-sm mb-2 text-gray-500">Password must include at least 1 uppercase letter and 1 number</p>
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded">Login</button>
+      <p class="mt-4 text-sm text-center">Don't have an account? <a href="#" id="signup-link" class="text-blue-600">Sign Up</a></p>
+    </form>
+  </div>
+
+  <!-- Sign Up Form -->
+  <div id="signup-form" class="min-h-screen flex items-center justify-center hidden">
+    <form class="bg-white p-8 rounded shadow-md w-full max-w-md form-login">
+      <img src="images/a.jpg" alt="OleumGuard Logo" class="mx-auto mb-4">
+      <h2 class="text-[60px] font-bold mb-4 text-center">Sign Up</h2>
+      <label class="block mb-2">Username</label>
+      <input type="text" name="username" class="w-full mb-4 px-3 py-2 border rounded" required>
+      <label class="block mb-2">Email</label>
+      <input type="email" class="w-full mb-4 px-3 py-2 border rounded" required>
+      <label class="block mb-2">Password</label>
+      <input type="password" name="password" class="w-full mb-4 px-3 py-2 border rounded" required>
+      <p class="text-sm mb-2 text-gray-500">Password must include at least 1 uppercase letter and 1 number</p>
+      <button type="submit" class="w-full bg-green-600 text-white py-2 rounded">Create Account</button>
+      <p class="mt-4 text-sm text-center">Already have an account? <a href="#" id="login-link" class="text-blue-600">Login</a></p>
+    </form>
+  </div>
+
+  <!-- Main Interface -->
+  <div id="main-content" class="hidden p-6">
+    <div class="text-center mb-6">
+      <img src="images/banner.jpg" alt="OleumGuard Banner" class="mx-auto mb-2">
+      <h1 class="text-[60px] font-bold">OleumGuard</h1>
+    </div>
+
+    <div class="tabs mb-6 flex flex-wrap gap-2 justify-center">
+      <a href="#psi-system" class="tab-link px-4 py-2 bg-blue-600 text-white rounded">PSI System</a>
+      <a href="#satellite-imagery" class="tab-link px-4 py-2 bg-gray-200 rounded">Satellite Imagery</a>
+      <a href="#oil-spillage-detection" class="tab-link px-4 py-2 bg-gray-200 rounded">Oil Spillage Detection</a>
+      <a href="#blowouts" class="tab-link px-4 py-2 bg-gray-200 rounded">Blowouts</a>
+      <a href="#training-engineers" class="tab-link px-4 py-2 bg-gray-200 rounded">Training Engineers</a>
+      <a href="#environment-protection" class="tab-link px-4 py-2 bg-gray-200 rounded">Environment Protection</a>
+      <a href="#emergency" class="tab-link px-4 py-2 bg-gray-200 rounded">Emergency</a>
+    </div>
+
+    <!-- PSI System -->
+    <div id="psi-system" class="tab-content">
+      <h2 class="text-[60px] font-semibold mb-4 text-gray-800">PSI System</h2>
+      <img src="images/b.jpg" alt="PSI System Image" class="mb-4 mx-auto">
+      <p>The Pressure Safety Instrumentation (PSI) system is a critical safety measure for preventing accidents in oil and gas industries. It monitors pressure levels and activates safety measures when thresholds are exceeded to prevent equipment failure.</p>
+    </div>
+
+    <!-- Satellite Imagery -->
+    <div id="satellite-imagery" class="tab-content hidden">
+      <h2 class="text-[60px] font-semibold mb-4 text-gray-800">Satellite Imagery</h2>
+      <img src="images/bc.jpeg" alt="Satellite Imagery" class="mb-4 mx-auto">
+      <p>Satellite imagery plays a vital role in monitoring oil fields, pipelines, and environmental conditions. It provides real-time data for detecting issues such as leaks and spills, aiding in quick decision-making and response.</p>
+    </div>
+
+    <!-- Oil Spillage Detection -->
+    <div id="oil-spillage-detection" class="tab-content hidden">
+      <h2 class="text-[60px] font-semibold mb-4 text-gray-800">Oil Spillage Detection</h2>
+      <img src="images/c.jpeg" alt="Oil Spillage Detection" class="mb-4 mx-auto">
+      <p>Our advanced detection system uses a combination of satellite data and on-site sensors to identify and mitigate oil spills. This ensures faster response times and minimizes environmental impact.</p>
+    </div>
+
+    <!-- Blowouts -->
+    <div id="blowouts" class="tab-content hidden">
+      <h2 class="text-[60px] font-semibold mb-4 text-gray-800">Blowouts</h2>
+      <img src="images/e.jpeg" alt="Blowouts" class="mb-4 mx-auto">
+      <p>Blowouts in oil fields can cause catastrophic damage. Our system is designed to detect pressure anomalies in real-time, preventing blowouts before they occur by shutting down systems immediately when necessary.</p>
+    </div>
+
+    <!-- Training Engineers -->
+    <div id="training-engineers" class="tab-content hidden">
+      <h2 class="text-[60px] font-semibold mb-4 text-gray-800">Training Engineers</h2>
+      <img src="images/f.jpeg" alt="Training Engineers" class="mb-4 mx-auto">
+      <p>We offer specialized training programs to ensure engineers are fully equipped with the knowledge to handle critical situations. Our courses cover topics from safety protocols to advanced diagnostic tools.</p>
+    </div>
+
+    <!-- Environment Protection -->
+    <div id="environment-protection" class="tab-content hidden">
+      <h2 class="text-[60px] font-semibold mb-4 text-gray-800">Environment Protection</h2>
+      <img src="images/f.jpeg" alt="Environment Protection" class="mb-4 mx-auto">
+      <p>We prioritize environmental sustainability by providing systems that reduce the environmental impact of oil and gas extraction. Our solutions include monitoring emissions and ensuring compliance with environmental regulations.</p>
+    </div>
+
+    <!-- Emergency -->
+    <div id="emergency" class="tab-content hidden">
+      <h2 class="text-[60px] font-semibold mb-4 text-gray-800">Emergency Complaint</h2>
+      <ul class="list-inside ml-6 text-lg text-gray-900 space-y-2">
+        <li><strong class="text-xl">Blowout at Oil Rig Alpha</strong> - March 10, 2023</li>
+        <li><strong class="text-xl">Oil Spill in Bay of Bengal</strong> - December 5, 2022</li>
+        <li><strong class="text-xl">Fire at Refinery XYZ</strong> - July 23, 2021</li>
+        <li><strong class="text-xl">Pipeline Burst in Nevada</strong> - November 17, 2020</li>
+      </ul>
+      <form id="emergency-form">
+        <textarea id="complaint-text" class="w-full mb-4 p-4 border rounded text-lg text-gray-900" rows="4" placeholder="Enter your emergency complaint here..."></textarea>
+        <button type="submit" class="w-full bg-red-600 text-white py-2 rounded text-lg">Submit Complaint</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
