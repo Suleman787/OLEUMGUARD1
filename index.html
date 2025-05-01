@@ -33,7 +33,7 @@
             mainContent.classList.remove('hidden');
             document.querySelector('.tab-link[href="#psi-system"]').classList.add('bg-blue-700', 'text-white');
           } else {
-            alert("Invalid credentials. Ensure Username: Group 8 and Password: Legend1 (must include one uppercase and one number). Only exact match is accepted.");
+            alert("Invalid credentials (must include one uppercase and one number). Only exact match is accepted.");
           }
         });
       });
@@ -165,11 +165,45 @@
     </div>
 
     <!-- Blowouts -->
-    <div id="blowouts" class="tab-content hidden">
-      <h2 class="text-[60px] font-semibold mb-4 text-gray-800">Blowouts</h2>
-      <img src="images/e.jpeg" alt="Blowouts" class="mb-4 mx-auto">
-      <p>Blowouts in oil fields can cause catastrophic damage. Our system is designed to detect pressure anomalies in real-time, preventing blowouts before they occur by shutting down systems immediately when necessary.</p>
-    </div>
+<div id="blowouts" class="tab-content hidden">
+  <h2 class="text-[60px] font-semibold mb-4 text-gray-800">Blowouts</h2>
+  <img src="images/e.jpeg" alt="Blowouts" class="mb-4 mx-auto">
+  <p class="mb-6">Blowouts in oil fields can cause catastrophic damage. Our system is designed to detect pressure anomalies in real-time, preventing blowouts before they occur by shutting down systems immediately when necessary.</p>
+
+  <!-- Blowout Detector Order Form -->
+  <div class="bg-white p-6 rounded shadow-md max-w-2xl mx-auto">
+    <h3 class="text-2xl font-semibold mb-4 text-center">Order Blowout Detector</h3>
+    <form id="orderForm">
+      <div class="mb-4">
+        <label class="block font-semibold mb-2">Select Terrain Type:</label>
+        <select name="terrain" class="w-full p-2 border rounded">
+          <option>Mountainous</option>
+          <option>Desert</option>
+          <option>Coastal</option>
+          <option>Urban</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="block font-semibold mb-2">Operating Temperature Range (°C):</label>
+        <input type="text" name="temperature" class="w-full p-2 border rounded" placeholder="e.g. -40 to 85">
+      </div>
+
+      <div class="mb-4">
+        <label class="block font-semibold mb-2">Corrosion Resistance Level:</label>
+        <select name="corrosion" class="w-full p-2 border rounded">
+          <option>Standard</option>
+          <option>High</option>
+          <option>Extreme (Marine/Industrial)</option>
+        </select>
+      </div>
+
+      <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded w-full">Submit Order</button>
+    </form>
+  </div>
+</div>
+
 
     <!-- Training Engineers -->
     <div id="training-engineers" class="tab-content hidden">
